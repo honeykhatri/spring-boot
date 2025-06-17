@@ -47,7 +47,7 @@ Spring Boot typically uses these from java.util.concurrent.Executors:
 
 - **ScheduledThreadPool**: For delayed or periodic tasks.
 
-**⚙️ Key ThreadPoolExecutor Parameters **
+⚙️ **Key ThreadPoolExecutor Parameters**
 
 1. **corePoolSize**
 
