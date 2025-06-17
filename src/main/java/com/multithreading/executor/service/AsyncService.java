@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AsyncService {
-  @Async("taskExecutor")
+  @Async("fixedExecutor")
   public void executeAsyncTask(){
     System.out.println("Executing task in thread. " + Thread.currentThread().getName());
     try{
