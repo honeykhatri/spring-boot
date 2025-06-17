@@ -32,6 +32,7 @@ At its core, the Executor framework provides a way to decouple task submission f
 Instead of manually creating threads, you submit tasks to an executor, which manages a pool of threads behind the scenes.
 
 **⚙️ Common Executor Types**
+
 Spring Boot typically uses these from java.util.concurrent.Executors:
 - **FixedThreadPool**: A pool with a fixed number of threads.
   executor.setCorePoolSize(5);
@@ -39,15 +40,17 @@ Spring Boot typically uses these from java.util.concurrent.Executors:
   executor.setQueueCapacity(100);
 
 - **CachedThreadPool**: Dynamically grows and reuses threads.
+
   executor.setCorePoolSize(0);
   executor.setMaxPoolSize(Integer.MAX_VALUE);
   executor.setQueueCapacity(0);
 
 - **ScheduledThreadPool**: For delayed or periodic tasks.
 
-⚙️ Key ThreadPoolExecutor Parameters 
+**⚙️ Key ThreadPoolExecutor Parameters **
 
 1. **corePoolSize**
+
 **Definition** : The number of threads to keep in the pool, even if they are idle.
 
 **Behavior** : The Threads are always alive and ready to process tasks
@@ -55,12 +58,16 @@ Spring Boot typically uses these from java.util.concurrent.Executors:
 **Example** : If corePoolSize = 5, the pool will always try to keep 5 threads running.
 
 3. **maxPoolSize** 
+
 **Definition** : The maximum no. of threads allowed in the pool.
+
 **Behavior** : If the task queue is full and all the core threads are busy, new threads
    (up to maxPoolSize) will be created.
+
 **Example** : If maxPoolSize = 10, the pool can grow to 10 threads under heavy load.
 
 4. **queueCapacity**
+
 **Definition** : The size of the queue that holds tasks before they are executed.
 
 **Behavior** : 
@@ -70,13 +77,18 @@ If the queue is full & number of threads < maxPoolSize, a new thread is created.
 If the queue is full & number of threads < maxPoolSiz, the task is rejected.
 
 5. **keepAliveTime**
+
 **Definition** : Time that excess idle threads(beyond corePoolSize) will wait for new tasks
  before terminating
+
 **Default** : 60 Seconds
+
 **Use case** : Helps reduce resource usage when the load decreases.
 
 6. **threadNamePrefix**
+
 **Definition** : Prefix for thread names in the pool.
+
 **Use case** : Useful for debugging and monitoring.
 
 
