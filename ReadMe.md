@@ -49,30 +49,33 @@ Spring Boot typically uses these from java.util.concurrent.Executors:
 
 1. **corePoolSize**
 **Definition** : The number of threads to keep in the pool, even if they are idle.
+
 **Behavior** : The Threads are always alive and ready to process tasks
+
 **Example** : If corePoolSize = 5, the pool will always try to keep 5 threads running.
 
-2. **maxPoolSize** 
+3. **maxPoolSize** 
 **Definition** : The maximum no. of threads allowed in the pool.
 **Behavior** : If the task queue is full and all the core threads are busy, new threads
    (up to maxPoolSize) will be created.
 **Example** : If maxPoolSize = 10, the pool can grow to 10 threads under heavy load.
 
-3. **queueCapacity**
+4. **queueCapacity**
 **Definition** : The size of the queue that holds tasks before they are executed.
+
 **Behavior** : 
 If the number of active threads <  corePoolSize, a new thread is created.
 If the number of active threads >= corePoolSize, the task is added to the queue.
 If the queue is full & number of threads < maxPoolSize, a new thread is created.
 If the queue is full & number of threads < maxPoolSiz, the task is rejected.
 
-4. **keepAliveTime**
+5. **keepAliveTime**
 **Definition** : Time that excess idle threads(beyond corePoolSize) will wait for new tasks
  before terminating
 **Default** : 60 Seconds
 **Use case** : Helps reduce resource usage when the load decreases.
 
-5. **threadNamePrefix**
+6. **threadNamePrefix**
 **Definition** : Prefix for thread names in the pool.
 **Use case** : Useful for debugging and monitoring.
 
