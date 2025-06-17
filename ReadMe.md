@@ -34,18 +34,36 @@ Instead of manually creating threads, you submit tasks to an executor, which man
 **⚙️ Common Executor Types**
 
 Spring Boot typically uses these from java.util.concurrent.Executors:
-- **FixedThreadPool**: A pool with a fixed number of threads.
+- **FixedThreadPool**: A fixed number of threads are created and reused for executing tasks.
+  
+  **_Configuration_**
+
   executor.setCorePoolSize(5);
   executor.setMaxPoolSize(10);
   executor.setQueueCapacity(100);
 
-- **CachedThreadPool**: Dynamically grows and reuses threads.
+  **_Use Cases_**
+* Suitable for CPU bound tasks
+* When you want to limit concurrency to a fixed number.
+
+- **CachedThreadPool**: Creates new threads as needed and reuses previously constructed threads when available.
+  
+  **_Configuration_**
 
   executor.setCorePoolSize(0);
   executor.setMaxPoolSize(Integer.MAX_VALUE);
   executor.setQueueCapacity(0);
 
+  **_Use Cases_**
+ * For short-lived asynchronous tasks.
+ * Suitable for I/O-bound operations with unpredictable load.
+   **Note** :  It can lead to high memory usage if too many threads are created.
+
 - **ScheduledThreadPool**: For delayed or periodic tasks.
+- Spring provides @Scheduled for this, but you can also use ScheduledThreadPoolExecutor.
+
+  **_Use Cases_**
+ * Periodic tasks like cleanup jobs, polling etc.
 
 ⚙️ **Key ThreadPoolExecutor Parameters**
 
@@ -91,5 +109,18 @@ If the queue is full & number of threads < maxPoolSiz, the task is rejected.
 
 **Use case** : Useful for debugging and monitoring.
 
+?? **How it works together**
+
+Let's say if we configure
+
+executor.setCorePoolSize(5);
+executor.setMaxPoolSize(10);
+executor.setQueueCapacity(50);
+
+Here is what happens when tasks arrive:
+1. **Tasks 1-5** : New threads are created (up to corePoolSize)
+2. **Tasks 6-55** : Tasks are queued (up to queue capacity)
+3. **Tasks 56-60** : New threads are created (up to maxPoolSize)
+4. **Tasks 61+** : Rejected.
 
 
